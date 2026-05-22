@@ -1,4 +1,38 @@
-# Bridge configs
+# Bridge: Basis-Driven Causal Inference Marries VFMs for Domain Generalization
+
+<p align="center">
+  <strong>CVPR 2026</strong> &nbsp;|&nbsp;
+  <a href="https://arxiv.org/abs/2604.26820">arXiv</a> &nbsp;|&nbsp;
+  <a href="https://arxiv.org/pdf/2604.26820">Paper</a>
+</p>
+
+## Abstract
+
+Bridge is a basis-driven causal inference framework for domain-generalized
+object detection with Vision Foundation Models (VFMs). It addresses the
+performance drop caused by source-to-target distribution gaps, especially in
+single-source settings where detectors may overfit to confounders such as
+illumination, style, and object co-occurrence. Bridge learns low-rank bases for
+front-door adjustment, suppressing spurious correlations while filtering
+redundant or task-irrelevant components. The framework is designed as a
+plug-and-play module for both discriminative VFMs, such as DINOv2/3 and SAM, and
+generative VFMs, such as Stable Diffusion. Experiments across cross-camera,
+adverse-weather, real-to-artistic, diverse-weather, and UAV-based benchmarks
+show consistent gains over prior domain-generalization object detection methods.
+
+## Teaser
+
+<p align="center">
+  <img src="images/heatmap.png" alt="Bridge teaser visualization" width="95%">
+</p>
+
+## Framework Overview
+
+<p align="center">
+  <img src="images/pipeline.png" alt="Bridge framework overview" width="95%">
+</p>
+
+## Bridge configs
 
 This folder contains the MMDetection configs used for Bridge, a DINOv3-based
 domain-generalized object detector. The configs are organized by benchmark and
@@ -191,4 +225,3 @@ Before publishing a release, check the following:
   `pretrain/`.
 - If you include DINOv3-derived source files, keep the upstream license notices
   and document any checkpoint download requirements.
-
