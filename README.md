@@ -200,3 +200,6 @@ bash tools/dist_test.sh \
 `watercolor`, `night_sunny`, `dark`, or `foggy` in your image paths, or update
 `dataset_keys` accordingly.
 
+## TODO
+
+- [ ] Release checkpoints.
