@@ -3,7 +3,22 @@
 <p align="center">
   <strong>CVPR 2026</strong> &nbsp;|&nbsp;
   <a href="https://arxiv.org/abs/2604.26820">arXiv</a> &nbsp;|&nbsp;
-  <a href="https://arxiv.org/pdf/2604.26820">Paper</a>
+  <a href="https://arxiv.org/pdf/2604.26820">Paper</a> &nbsp;|&nbsp;
+  <a href="https://huggingface.co/datasets/mingbohong/Bridge-Diverse-Weather-DroneVehicle">Diverse Weather DroneVehicle</a>
+</p>
+
+## Diverse Weather DroneVehicle Dataset
+
+This paper introduces **Diverse Weather DroneVehicle**, a UAV-based
+domain-generalization benchmark built from DroneVehicle with four weather and
+illumination domains: `day`, `dark`, `extreme_dark`, and `foggy`.
+
+The dataset annotations and statistics are released on Hugging Face:
+
+<p align="center">
+  <a href="https://huggingface.co/datasets/mingbohong/Bridge-Diverse-Weather-DroneVehicle">
+    <strong>Download Diverse Weather DroneVehicle annotations</strong>
+  </a>
 </p>
 
 ## Abstract
