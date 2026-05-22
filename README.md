@@ -200,9 +200,3 @@ bash tools/dist_test.sh \
 `watercolor`, `night_sunny`, `dark`, or `foggy` in your image paths, or update
 `dataset_keys` accordingly.
 
-## Config naming
-
-Each benchmark keeps the DINOv3 baseline plus a single public Bridge config
-selected by mAP50. Bridge filenames use the format
-`faster-rcnn-dinov3-bridge-{benchmark}.py` and do not expose internal Bridge
-ratios, kernels, or ablation settings.
