@@ -32,7 +32,7 @@ configs/bridge/
     dataset/      # Cityscapes source-domain dataset configs
     eval/         # Cityscapes, BDD100K, and Foggy Cityscapes eval sets
     schedule/     # 20k-iteration schedules
-    dinov3/       # DINOv3 baseline and Bridge variants
+    dinov3/       # DINOv3 baseline and best Bridge config
   dronevehicle/
     dataset/      # DroneVehicle day-source training configs
     eval/         # dark, extreme-dark, and foggy eval sets
@@ -127,22 +127,22 @@ Use MMDetection's standard training entry point. Examples:
 ```bash
 # VOC DG, Bridge
 bash tools/dist_train.sh \
-  configs/bridge/voc_dg/dinov3/faster-rcnn-dinov3-fd-0.125-voc.py \
+  configs/bridge/voc_dg/dinov3/faster-rcnn-dinov3-bridge-voc.py \
   4
 
 # Cityscapes -> BDD100K/Foggy Cityscapes, Bridge
 bash tools/dist_train.sh \
-  configs/bridge/cityscapes/dinov3/faster-rcnn-dinov3-fd-0.7-k3-cityscape.py \
+  configs/bridge/cityscapes/dinov3/faster-rcnn-dinov3-bridge-cityscape.py \
   4
 
 # Diverse Weather, Bridge
 bash tools/dist_train.sh \
-  configs/bridge/weather/dinov3/faster-rcnn-dinov3-fd-0.5-k3-weather.py \
+  configs/bridge/weather/dinov3/faster-rcnn-dinov3-bridge-weather.py \
   4
 
 # DroneVehicle, Bridge
 bash tools/dist_train.sh \
-  configs/bridge/dronevehicle/dinov3/faster-rcnn-dinov3-fd-0.5-k3-dv.py \
+  configs/bridge/dronevehicle/dinov3/faster-rcnn-dinov3-bridge-dv.py \
   4
 ```
 
@@ -156,7 +156,7 @@ Use the same config and a trained checkpoint:
 
 ```bash
 bash tools/dist_test.sh \
-  configs/bridge/voc_dg/dinov3/faster-rcnn-dinov3-fd-0.125-voc.py \
+  configs/bridge/voc_dg/dinov3/faster-rcnn-dinov3-bridge-voc.py \
   work_dirs/bridge_voc/latest.pth \
   4
 ```
@@ -168,15 +168,10 @@ bash tools/dist_test.sh \
 
 ## Config naming
 
-The DINOv3 config names encode the main ablation:
-
-- `baseline`: frozen DINOv3 Faster R-CNN without Bridge/CIM blocks.
-- `fd-{ratio}`: enables Bridge/CIM blocks with `basis_reduction_mode="mul"` and
-  a ratio such as `0.125`, `0.5`, `0.7`, or `0.9`.
-- `k1` / `k3`: uses a 1x1 or 3x3 convolution kernel in Bridge/CIM blocks.
-- `nohead`: disables the Bridge/CIM block in the RoI head.
-- `noinputsubspace`, `nonorm`, `query`: VOC ablations for input subspace
-  projection, basis normalization, and query estimation.
+Each benchmark keeps the DINOv3 baseline plus a single public Bridge config
+selected by mAP50. Bridge filenames use the format
+`faster-rcnn-dinov3-bridge-{benchmark}.py` and do not expose internal Bridge
+ratios, kernels, or ablation settings.
 
 ## Open-source checklist
 
@@ -191,4 +186,3 @@ Before publishing a release, check the following:
   `pretrain/`.
 - If you include DINOv3-derived source files, keep the upstream license notices
   and document any checkpoint download requirements.
-

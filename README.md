@@ -1,4 +1,4 @@
-# Bridge: Basis-Driven Causal Inference Marries VFMs for Domain Generalization
+# [CVPR 2026] Bridge: Basis-Driven Causal Inference Marries VFMs for Domain Generalization
 
 <p align="center">
   <strong>CVPR 2026</strong> &nbsp;|&nbsp;
@@ -20,7 +20,7 @@ generative VFMs, such as Stable Diffusion. Experiments across cross-camera,
 adverse-weather, real-to-artistic, diverse-weather, and UAV-based benchmarks
 show consistent gains over prior domain-generalization object detection methods.
 
-## Teaser
+## visualization
 
 <p align="center">
   <img src="images/heatmap.png" alt="Bridge teaser visualization" width="95%">
@@ -66,7 +66,7 @@ configs/bridge/
     dataset/      # Cityscapes source-domain dataset configs
     eval/         # Cityscapes, BDD100K, and Foggy Cityscapes eval sets
     schedule/     # 20k-iteration schedules
-    dinov3/       # DINOv3 baseline and Bridge variants
+    dinov3/       # DINOv3 baseline and best Bridge config
   dronevehicle/
     dataset/      # DroneVehicle day-source training configs
     eval/         # dark, extreme-dark, and foggy eval sets
@@ -161,22 +161,22 @@ Use MMDetection's standard training entry point. Examples:
 ```bash
 # VOC DG, Bridge
 bash tools/dist_train.sh \
-  configs/bridge/voc_dg/dinov3/faster-rcnn-dinov3-fd-0.125-voc.py \
+  configs/bridge/voc_dg/dinov3/faster-rcnn-dinov3-bridge-voc.py \
   4
 
 # Cityscapes -> BDD100K/Foggy Cityscapes, Bridge
 bash tools/dist_train.sh \
-  configs/bridge/cityscapes/dinov3/faster-rcnn-dinov3-fd-0.7-k3-cityscape.py \
+  configs/bridge/cityscapes/dinov3/faster-rcnn-dinov3-bridge-cityscape.py \
   4
 
 # Diverse Weather, Bridge
 bash tools/dist_train.sh \
-  configs/bridge/weather/dinov3/faster-rcnn-dinov3-fd-0.5-k3-weather.py \
+  configs/bridge/weather/dinov3/faster-rcnn-dinov3-bridge-weather.py \
   4
 
 # DroneVehicle, Bridge
 bash tools/dist_train.sh \
-  configs/bridge/dronevehicle/dinov3/faster-rcnn-dinov3-fd-0.5-k3-dv.py \
+  configs/bridge/dronevehicle/dinov3/faster-rcnn-dinov3-bridge-dv.py \
   4
 ```
 
@@ -190,7 +190,7 @@ Use the same config and a trained checkpoint:
 
 ```bash
 bash tools/dist_test.sh \
-  configs/bridge/voc_dg/dinov3/faster-rcnn-dinov3-fd-0.125-voc.py \
+  configs/bridge/voc_dg/dinov3/faster-rcnn-dinov3-bridge-voc.py \
   work_dirs/bridge_voc/latest.pth \
   4
 ```
@@ -202,26 +202,7 @@ bash tools/dist_test.sh \
 
 ## Config naming
 
-The DINOv3 config names encode the main ablation:
-
-- `baseline`: frozen DINOv3 Faster R-CNN without Bridge/CIM blocks.
-- `fd-{ratio}`: enables Bridge/CIM blocks with `basis_reduction_mode="mul"` and
-  a ratio such as `0.125`, `0.5`, `0.7`, or `0.9`.
-- `k1` / `k3`: uses a 1x1 or 3x3 convolution kernel in Bridge/CIM blocks.
-- `nohead`: disables the Bridge/CIM block in the RoI head.
-- `noinputsubspace`, `nonorm`, `query`: VOC ablations for input subspace
-  projection, basis normalization, and query estimation.
-
-## Open-source checklist
-
-Before publishing a release, check the following:
-
-- Remove generated `__pycache__/` folders if they are present in the working
-  tree. They are ignored by `.gitignore`, but should not be committed.
-- Do not commit local data, pretrained checkpoints, work directories, or result
-  visualizations. The current `.gitignore` already excludes `data/`,
-  `pretrain/`, `work_dirs/`, `*.pth`, and common generated outputs.
-- Verify that every public config uses relative paths under `data/` and
-  `pretrain/`.
-- If you include DINOv3-derived source files, keep the upstream license notices
-  and document any checkpoint download requirements.
+Each benchmark keeps the DINOv3 baseline plus a single public Bridge config
+selected by mAP50. Bridge filenames use the format
+`faster-rcnn-dinov3-bridge-{benchmark}.py` and do not expose internal Bridge
+ratios, kernels, or ablation settings.
